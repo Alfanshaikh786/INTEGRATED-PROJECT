@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Route Planner AI</title>
+    <meta name="description" content="AI-powered pathfinding visualizer. Build a city graph and watch Dijkstra, A*, or Greedy algorithms find the optimal route in real-time.">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Controls -->
+        <aside class="sidebar glass-panel">
+            <h1 class="logo">Route<span>AI</span></h1>
+
+            <div class="control-group">
+                <h3>Interaction Mode</h3>
+                <div class="radio-group" id="mode-group">
+                    <label class="radio-btn active" id="mode-add-node">
+                        <input type="radio" name="mode" value="add_node" checked>
+                        <span>📍 Add Cities</span>
+                    </label>
+                    <label class="radio-btn" id="mode-add-edge">
+                        <input type="radio" name="mode" value="add_edge">
+                        <span>🛤️ Draw Roads</span>
+                    </label>
+                    <label class="radio-btn" id="mode-move-node">
+                        <input type="radio" name="mode" value="move_node">
+                        <span>🖐️ Move Cities</span>
+                    </label>
+                    <label class="radio-btn" id="mode-set-start">
+                        <input type="radio" name="mode" value="set_start">
+                        <span>🟢 Set Start City</span>
+                    </label>
+                    <label class="radio-btn" id="mode-set-end">
+                        <input type="radio" name="mode" value="set_end">
+                        <span>🔴 Set End City</span>
+                    </label>
+                    <label class="radio-btn" id="mode-set-waypoint">
+                        <input type="radio" name="mode" value="set_waypoint">
+                        <span>📌 Toggle Waypoint</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <h3>Optimization Preference</h3>
+                <div class="radio-group">
+                    <label class="radio-btn active">
+                        <input type="radio" name="pref" value="distance" checked>
+                        <span>📏 Shortest Distance</span>
+                    </label>
+                    <label class="radio-btn">
+                        <input type="radio" name="pref" value="traffic">
+                        <span>🚦 Least Traffic</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <h3>Select Algorithm</h3>
+                <select id="algo-select" class="dropdown">
+                    <option value="auto">🧠 AI Auto-Select</option>
+                    <option value="dijkstra">Dijkstra's Algorithm</option>
+                    <option value="astar">A* (A-Star)</option>
+                    <option value="greedy">Greedy Best-First</option>
+                    <option value="binary_search">Binary Search (Bottleneck)</option>
+                    <option value="ao_star">AO* (AND-OR / Waypoints)</option>
+                    <option value="dfs">Depth-First Search (DFS)</option>
+                    <option value="bfs">Breadth-First Search (BFS)</option>
+                    <option value="topo_sort">Topological Sort (DAG)</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <h3>Animation Speed</h3>
+                <div class="speed-control">
+                    <span class="speed-label">🐢</span>
+                    <input type="range" id="speed-slider" min="50" max="800" value="300" step="50">
+                    <span class="speed-label">⚡</span>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button id="btn-random" class="btn secondary-btn" style="margin-bottom: 4px;">🎲 Random Map</button>
+                <div style="display: flex; gap: 8px; margin-bottom: 4px;">
+                    <button id="btn-save" class="btn secondary-btn" style="flex: 1; padding: 8px;">💾 Save</button>
+                    <button id="btn-load" class="btn secondary-btn" style="flex: 1; padding: 8px;">📂 Load</button>
+                </div>
+                <button id="btn-find" class="btn primary-btn">🔍 Find Path</button>
+                <button id="btn-clear" class="btn secondary-btn">🗑️ Clear Graph</button>
+            </div>
+
+            <div class="stats-panel glass-panel">
+                <h3>Path Intelligence</h3>
+                <div id="stats-content" class="stats-content">
+                    <p class="placeholder">Waiting for map data...</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Canvas Area -->
+        <main class="canvas-container">
+            <canvas id="graph-canvas"></canvas>
+            <div class="hint-overlay" id="hint-overlay">Click anywhere to add a city (node)</div>
+            <div class="legend-overlay" id="legend-overlay">
+                <span class="legend-item"><span class="legend-dot" style="background:#3b82f6"></span>Unvisited</span>
+                <span class="legend-item"><span class="legend-dot" style="background:#f59e0b"></span>Exploring</span>
+                <span class="legend-item"><span class="legend-dot" style="background:#10b981"></span>Path</span>
+                <span class="legend-item"><span class="legend-dot" style="background:#22c55e"></span>Start</span>
+                <span class="legend-item"><span class="legend-dot" style="background:#ef4444"></span>End</span>
+                <span class="legend-item"><span class="legend-dot" style="background:#a855f7"></span>Waypoint</span>
+            </div>
+        </main>
+    </div>
+    
+    <script src="app.js?v=4"></script>
+</body>
+</html>
